@@ -34,9 +34,8 @@ export default function ProcessNavbar() {
 
       <div className="flex-grow justify-center align-center items-center text-center bg-white p-5 space-y-4">
         <div className="text-5xl font-bold">{navbar[activeIndex].header}</div>
-        {activeIndex === 0 && <UploadComponent></UploadComponent>}
-        {activeIndex === 1 && <FilterComponent onFilterSubmit={handleFilterSubmit} />}
-        {activeIndex === 2 && <AnalysisComponent filteredData={filteredData} />}
+        {activeIndex === 0 && <FilterComponent onFilterSubmit={handleFilterSubmit} />}
+        {activeIndex === 1 && <AnalysisComponent filteredData={filteredData} />}
       </div>
     </div>
   );

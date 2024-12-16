@@ -59,26 +59,41 @@ const relatedProgramName = async (req, res) => {
 
 const filterData = async (req, res) => {
   try {
-    const { pub_objectuai, software_activeprogramname } = req.body;
+    const { pub_objectuai, software_activeprogramname, startDate, endDate } =
+      req.body;
 
     const data = await getAllData();
 
     const filteredData = data.filter((item) => {
-      let matchesObjectUai = false;
-      let matchesSoftware_ProgramName = false;
+
+      let matchesObjectUai = true;
+      let matchesSoftware_ProgramName = true;
+      let matchesDateRange = true;
+
+      if (pub_objectuai && item.pub_objectuai !== pub_objectuai) {
+        matchesObjectUai = false;
+      }
 
       if (
         software_activeprogramname &&
-        item.Software_ActiveProgramName === software_activeprogramname
+        item.Software_ActiveProgramName !== software_activeprogramname
       ) {
-        matchesSoftware_ProgramName = true;
+        matchesSoftware_ProgramName = false;
       }
 
-      if (pub_objectuai && item.pub_objectuai === pub_objectuai) {
-        matchesObjectUai = true;
+      if (startDate || endDate) {
+        const itemDate = new Date(item.pub_sourcetimestamp);
+        if (startDate && itemDate < new Date(startDate)) {
+          matchesDateRange = false;
+        }
+        if (endDate && itemDate > new Date(endDate)) {
+          matchesDateRange = false;
+        }
       }
 
-      return matchesSoftware_ProgramName && matchesObjectUai;
+      return (
+        matchesObjectUai && matchesSoftware_ProgramName && matchesDateRange
+      );
     });
 
     if (filteredData.length === 0) {

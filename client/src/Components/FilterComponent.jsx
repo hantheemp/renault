@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Formik, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import UploadComponent from "./UploadComponent";
 
 export default function FilterComponent({ onFilterSubmit = () => {} }) {
   const [objectUaiOptions, setObjectUaiOptions] = useState([]);
@@ -66,7 +67,9 @@ export default function FilterComponent({ onFilterSubmit = () => {} }) {
   };
 
   return (
-    <div className="p-4 rounded-md justify-center items-center text-center flex">
+    <div className="p-4">
+      <UploadComponent></UploadComponent>
+    <div className="rounded-md justify-center items-center text-center flex">
       <Formik
         initialValues={{
           pub_objectuai: "",
@@ -92,7 +95,7 @@ export default function FilterComponent({ onFilterSubmit = () => {} }) {
               <Field
                 name="pub_objectuai"
                 as="select"
-                className="input input-bordered w-full max-w-xs"
+                className="input input-bordered min-w-80"
                 onChange={(e) => {
                   const selectedUAI = e.target.value;
                   setFieldValue("pub_objectuai", selectedUAI);
@@ -137,7 +140,7 @@ export default function FilterComponent({ onFilterSubmit = () => {} }) {
                 <span className="label-text">Date Start</span>
               </label>
               <Field
-                name="dateStart"
+                name="startDate"
                 type="date"
                 className="input input-bordered w-full max-w-xs"
               ></Field>
@@ -145,7 +148,7 @@ export default function FilterComponent({ onFilterSubmit = () => {} }) {
                 <span className="label-text">Date End</span>
               </label>
               <Field
-                name="dateEnd"
+                name="endDate"
                 type="date"
                 className="input input-bordered w-full max-w-xs"
               ></Field>
@@ -156,6 +159,7 @@ export default function FilterComponent({ onFilterSubmit = () => {} }) {
           </form>
         )}
       </Formik>
+    </div>
     </div>
   );
 }

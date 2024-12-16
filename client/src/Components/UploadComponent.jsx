@@ -4,6 +4,7 @@ import axios from "axios";
 export default function UploadComponent() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -29,6 +30,9 @@ export default function UploadComponent() {
     const formData = new FormData();
     formData.append("file", selectedFile);
 
+    setLoading(true);
+    setUploadStatus("");
+
     try {
       const response = await axios.post(
         "http://localhost:3000/file/uploadFile",
@@ -47,13 +51,15 @@ export default function UploadComponent() {
       }
     } catch (error) {
       console.error("Failed to upload or convert file: ", error);
-      setUploadStatus("failed to upload or convert file!");
+      setUploadStatus("Failed to upload or convert file!");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div>
-      <div className="p-4 bg-gray-100 rounded-md">
+      <div className="flex flex-col justify-center items-center text-center rounded-md space-y-8">
         <input
           type="file"
           accept=".xlsx"
@@ -62,13 +68,18 @@ export default function UploadComponent() {
         />
         <button
           onClick={handleFileUpload}
-          className="btn btn-primary w-full max-w-xs mt-4"
-          disabled={!selectedFile}
+          className={`btn btn-primary w-full max-w-xs ${
+            loading ? "btn-disabled" : ""
+          }`}
+          disabled={!selectedFile || loading}
         >
-          Upload File
+          {loading ? "Uploading..." : "Upload File"}
         </button>
         {uploadStatus && (
           <p className="mt-2 text-sm text-gray-600">{uploadStatus}</p>
+        )}
+        {loading && (
+          <p className="mt-2 text-sm text-blue-500">Uploading, please wait...</p>
         )}
       </div>
     </div>
