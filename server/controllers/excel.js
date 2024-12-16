@@ -2,19 +2,31 @@ const path = require("path");
 const XLSX = require("xlsx");
 const fs = require("fs");
 
-// Helper function to convert Excel to JSON
+const excelDateToJSDate = (excelDate) => {
+  const epoch = new Date(1900, 0, 1);
+  const days = Math.floor(excelDate - 1); 
+  const result = new Date(epoch.getTime() + days * 24 * 60 * 60 * 1000);
+  return result.toISOString().split("T")[0];
+};
+
 const readExcelFile = () => {
   const filePath = path.join(__dirname, "../data/Dataset.xlsx");
   const workbook = XLSX.readFile(filePath);
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
-  return XLSX.utils.sheet_to_json(sheet);
+  
+  const data = XLSX.utils.sheet_to_json(sheet);
+  
+  return data.map((row) => {
+    if (row.pub_sourcetimestamp) {
+      row.pub_sourcetimestamp = excelDateToJSDate(row.pub_sourcetimestamp);
+    }
+    return row;
+  });
 };
 
-// Controller function to convert Excel to JSON
 const convertExcelToJson = async (req, res) => {
   try {
-    // Convert the Excel file to JSON
     const jsonData = readExcelFile();
     const filePath = path.join(__dirname, '../data/output.json');
 
@@ -26,11 +38,14 @@ const convertExcelToJson = async (req, res) => {
           message: "Failed to write JSON file",
         });
       }
+      res.status(200).json({
+        success: true,
+        message: "Excel file converted to JSON successfully",
+      });
     });
   } catch (error) {
     console.error("Error reading Excel file:", error);
 
-    // Send an error response
     res.status(500).json({
       success: false,
       message: "Failed to convert Excel file to JSON",
