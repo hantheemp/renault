@@ -10,6 +10,7 @@ const cors = require("cors");
 // Routes
 const excelRoute = require("./routes/excel");
 const dataRoute = require("./routes/data");
+const fileRoute = require("./routes/file");
 
 // Create Express application
 var app = express();
@@ -34,6 +35,7 @@ app.use(
 // Mount routes
 app.use("/excel", excelRoute);
 app.use("/data", dataRoute);
+app.use("/file", fileRoute);
 
 // Set up view engine
 app.set("views", path.join(__dirname, "views"));

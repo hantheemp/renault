@@ -33,23 +33,14 @@ const convertExcelToJson = async (req, res) => {
     fs.writeFile(filePath, JSON.stringify(jsonData, null, 2), (err) => {
       if (err) {
         console.error("Error writing JSON file:", err);
-        return res.status(500).json({
-          success: false,
-          message: "Failed to write JSON file",
-        });
+        return false;
       }
-      res.status(200).json({
-        success: true,
-        message: "Excel file converted to JSON successfully",
-      });
+      return true;
     });
   } catch (error) {
     console.error("Error reading Excel file:", error);
 
-    res.status(500).json({
-      success: false,
-      message: "Failed to convert Excel file to JSON",
-    });
+    return false;
   }
 };
 

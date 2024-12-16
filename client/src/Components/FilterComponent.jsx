@@ -71,6 +71,8 @@ export default function FilterComponent({ onFilterSubmit = () => {} }) {
         initialValues={{
           pub_objectuai: "",
           software_activeprogramname: "",
+          dateStart: "",
+          dateEnd: "",
         }}
         onSubmit={(values, { resetForm }) => {
           handleFilterSubmit(values);
@@ -130,6 +132,24 @@ export default function FilterComponent({ onFilterSubmit = () => {} }) {
               </Field>
             </div>
 
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Date Start</span>
+              </label>
+              <Field
+                name="dateStart"
+                type="date"
+                className="input input-bordered w-full max-w-xs"
+              ></Field>
+              <label className="label">
+                <span className="label-text">Date End</span>
+              </label>
+              <Field
+                name="dateEnd"
+                type="date"
+                className="input input-bordered w-full max-w-xs"
+              ></Field>
+            </div>
             <button type="submit" className="btn btn-primary w-full max-w-xs">
               Submit Filters
             </button>
