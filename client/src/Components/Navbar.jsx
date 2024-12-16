@@ -3,7 +3,6 @@ import { navbar } from "./Data/navbar-data";
 import FilterComponent from "./FilterComponent"; 
 import AnalysisComponent from "./AnalysisComponent"; 
 import UploadComponent from "./UploadComponent";
-import GenerateReportComponent from "./GenerateReportsComponent";
 
 export default function ProcessNavbar() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -38,7 +37,6 @@ export default function ProcessNavbar() {
         {activeIndex === 0 && <UploadComponent></UploadComponent>}
         {activeIndex === 1 && <FilterComponent onFilterSubmit={handleFilterSubmit} />}
         {activeIndex === 2 && <AnalysisComponent filteredData={filteredData} />}
-        {activeIndex === 3 && <GenerateReportComponent></GenerateReportComponent>}
       </div>
     </div>
   );

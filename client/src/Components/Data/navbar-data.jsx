@@ -8,7 +8,6 @@ import {
 import FilterComponent from "../FilterComponent";
 import AnalysisComponent from "../AnalysisComponent";
 import UploadComponent from "../UploadComponent";
-import GenerateReportComponent from "../GenerateReportsComponent";
 
 export const navbar = [
   {
@@ -25,10 +24,5 @@ export const navbar = [
     header: "Create Analysis",
     icon: <PiChartScatterBold size={30} />,
     body: <AnalysisComponent></AnalysisComponent>,
-  },
-  {
-    header: "Download Report",
-    icon: <PiFilePdfBold size={30} />,
-    body: <GenerateReportComponent></GenerateReportComponent>,
   },
 ];
