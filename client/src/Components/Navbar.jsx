@@ -33,7 +33,7 @@ export default function ProcessNavbar() {
       </div>
 
       <div className="flex-grow justify-center align-center items-center text-center bg-white p-5 space-y-4">
-        <div className="text-4xl font-bold">{navbar[activeIndex].header}</div>
+        <div className="text-5xl font-bold">{navbar[activeIndex].header}</div>
         {activeIndex === 0 && <UploadComponent></UploadComponent>}
         {activeIndex === 1 && <FilterComponent onFilterSubmit={handleFilterSubmit} />}
         {activeIndex === 2 && <AnalysisComponent filteredData={filteredData} />}

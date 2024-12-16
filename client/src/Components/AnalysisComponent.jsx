@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas-";
+import html2canvas from "html2canvas-pro";
 import {
   LineChart,
   Line,
@@ -24,7 +24,7 @@ function AnalysisComponent({ filteredData = [] }) {
   const generatePDF = async () => {
     if (componentRef.current) {
       const canvas = await html2canvas(componentRef.current, {
-        backgroundColor: null, // Disable background rendering to avoid the color parsing error
+        backgroundColor: null,
       });
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
@@ -49,19 +49,12 @@ function AnalysisComponent({ filteredData = [] }) {
       <button
         onClick={generatePDF}
         style={{
-          marginBottom: "20px",
-          padding: "10px 20px",
-          backgroundColor: "#4CAF50",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
         }}
+        className="bg-blue-500"
       >
-        Download as PDF
+        <p className="text-white text-xl font-bold italic cursor-pointer border-none p-4">Download as PDF</p>
       </button>
 
-      {/* Wrap your entire analysis component with the ref */}
       <div ref={componentRef}>
         <div>
           <h2 className="text-xl italic my-4">

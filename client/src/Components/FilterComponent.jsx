@@ -66,7 +66,7 @@ export default function FilterComponent({ onFilterSubmit = () => {} }) {
   };
 
   return (
-    <div className="p-4 bg-gray-100 rounded-md">
+    <div className="p-4 rounded-md justify-center items-center text-center flex">
       <Formik
         initialValues={{
           pub_objectuai: "",
